@@ -1,4 +1,4 @@
-function create(tag, object, children){
+function create(tag, object, ...children){
     const props = object || {}
     const element = document.createElement(tag)
     if (props.id) element.id = id
@@ -13,11 +13,17 @@ function create(tag, object, children){
             element.dataset[key] = props.data[key]
         })
     }
-    if (children) element.innerText = text
+    if (children) element.append(...children)
     return element
 }
 
-let div = create('div', {style: {color: 'red', fontSize: '20px'}}, 'ghbdtn')
+let p = create(
+    'div', 
+    {}, 
+        'Привет ', 
+        create('em', {},  'Мир') , 
+        '!'
+)
 
 
-document.body.append(div)
+document.body.append(p)
