@@ -17,13 +17,6 @@ function create(tag, object, ...children){
     return element
 }
 
-let p = create(
-    'div', 
-    {}, 
-        'Привет ', 
-        create('em', {},  'Мир') , 
-        '!'
-)
-
+let card = create()
 
 document.body.append(p)
