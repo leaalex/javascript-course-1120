@@ -97,7 +97,7 @@ window.onload = function(){
         const button = creator.genID('input')
         return creator.add('div', { className: 'input-group mb-3' },
             creator.add('div', { className: 'input-group-prepend' },
-                creator.add('div', { className: 'input-group-text' },
+                creator.add('div', { className: 'input-group-text bg-primary' },
                     creator.add('input', {
                         type: 'checkbox',
                         events: {
@@ -109,7 +109,7 @@ window.onload = function(){
                     })
                 )
             ),
-            creator.add('input', { className: 'form-control', type: 'text', disabled: true, ref: input, value }),
+            creator.add('input', { className: 'form-control bg-primary text-white', type: 'text', disabled: true, ref: input, value }),
             creator.add('div', { className: 'input-group-append' },
                 creator.add('button', {
                     className: 'btn btn-outline-secondary',

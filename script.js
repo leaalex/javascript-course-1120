@@ -38,6 +38,7 @@ function Creater(root){
          if (ref) this.elements[ref] = element
          
         if (children) element.append(...children)
+        
         return element
     }
     Creater.prototype.publish = function(...elements){
@@ -100,7 +101,13 @@ function createTask(value){
                         creator.add('input', {
                             type:'checkbox',
                             events: {
-                                'change': (event) => console.log(event)
+                                'change': (event) => {
+                                    if (event.target.checked){
+                                        creator.elements[input].previousElementSibling.firstElementChild.classList.add('bg-primary')
+                                    } else {
+                                        creator.elements[input].previousElementSibling.firstElementChild.classList.remove('bg-primary')
+                                    }
+                                }
                             }
                     })
                     )
