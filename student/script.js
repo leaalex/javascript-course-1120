@@ -81,7 +81,7 @@ creator.publish(
                         creator.elements['input'].value = ''
                     }
                 }
-            }, '+ Создать задачу')
+            }, '+ Создать')
         ),
     ),
     creator.add('div', {ref: 'container'})
