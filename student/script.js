@@ -42,7 +42,7 @@ function Creater(root){
     }
 }
 
-
+// раз два
 
 window.creator = new Creater(document.getElementById('root'))
 
