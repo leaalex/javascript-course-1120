@@ -92,33 +92,38 @@ window.onload = function(){
     
     
     
-    function createTask(value){
+    function createTask(value) {
         const input = creator.genID('input')
-        return creator.add('div', {className:'input-group mb-3'},
-                    creator.add('div', {className:'input-group-prepend'},
-                        creator.add('div', {className:'input-group-text'},
-                            creator.add('input', {
-                                type:'checkbox',
-                                events: {
-                                    'change': (event) => console.log(event)
-                                }
-                        })
-                        )
-                    ),
-                    creator.add('input', {className:'form-control', type:'text', disabled: true, ref: input,  value}),
-                    creator.add('div', {className: 'input-group-append'},  
-                    creator.add('button', { 
-                        className:'btn btn-outline-secondary',
-                        type: 'button',
+        const button = creator.genID('input')
+        return creator.add('div', { className: 'input-group mb-3' },
+            creator.add('div', { className: 'input-group-prepend' },
+                creator.add('div', { className: 'input-group-text' },
+                    creator.add('input', {
+                        type: 'checkbox',
                         events: {
-                            'click': ()=>{
-                                if (creator.elements[input].disabled) creator.elements[input].disabled = false
-                                else creator.elements[input].disabled = true
+                            'change': (event) => {
+                                creator.elements[button].disabled = event.target.checked
+                                creator.elements[input].style = event.target.checked ? 'text-decoration: line-through' : 'text-decoration: none'
                             }
                         }
-                    }, 'Редактировать')
-                ),
-            )
+                    })
+                )
+            ),
+            creator.add('input', { className: 'form-control', type: 'text', disabled: true, ref: input, value }),
+            creator.add('div', { className: 'input-group-append' },
+                creator.add('button', {
+                    className: 'btn btn-outline-secondary',
+                    type: 'button',
+                    ref: button,
+                    events: {
+                        'click': () => {
+                            if (creator.elements[input].disabled) creator.elements[input].disabled = false
+                            else creator.elements[input].disabled = true
+                        }
+                    }
+                }, 'Редактировать')
+            ),
+        )
     }
     
     }
