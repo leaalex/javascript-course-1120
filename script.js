@@ -55,10 +55,9 @@ creator.publish(
             placeholder: 'Введите описание задачи',
             events: {
                 'keyup': function(event) {
-                    if (event.code === 'Enter'){
-                        creator.elements['container'].append(
-                            creator.add('p', {}, this.value)
-                            )
+
+                    if (this.value !== '' && event.code === 'Enter'){
+                        creator.elements['container'].append(createTask(this.value))
                         this.value = ''
                     }
                     if (event.code === "Escape"){
@@ -75,16 +74,37 @@ creator.publish(
                 type: 'button',
                 events: {
                     'click': ()=>{
-                        creator.elements['container'].append(
-                            creator.add('p', {}, creator.elements['input'].value)
-                            )
+                        creator.elements['container'].append(createTask(creator.elements['input'].value))
                         creator.elements['input'].value = ''
                     }
                 }
-            }, '+ Создать задачу')
+            }, '+ Создать')
         ),
     ),
     creator.add('div', {ref: 'container'})
     )
 
 }
+
+function createTask(value){
+    return  creator.add('div', {className:'input-group mb-3'},
+                creator.add('div', {className:'input-group-prepend'},
+                    creator.add('div', {className:'input-group-text'},
+                        creator.add('input', {type:'checkbox'})
+                    )
+                ),
+                creator.add('input', {className:'form-control', type:'text', disabled: true,  value}),
+                creator.add('div', {className: 'input-group-append'},  
+                creator.add('button', { 
+                    className:'btn btn-outline-secondary',
+                    type: 'button',
+                    events: {
+                        'click': ()=>{
+                        }
+                    }
+                }, 'Редактировать')
+            ),
+            )
+}
+
+
