@@ -97,7 +97,12 @@ function createTask(value){
     return creator.add('div', {className:'input-group mb-3'},
                 creator.add('div', {className:'input-group-prepend'},
                     creator.add('div', {className:'input-group-text'},
-                        creator.add('input', {type:'checkbox'})
+                        creator.add('input', {
+                            type:'checkbox',
+                            events: {
+                                'change': (event) => console.log(event)
+                            }
+                    })
                     )
                 ),
                 creator.add('input', {className:'form-control', type:'text', disabled: true, ref: input,  value}),
