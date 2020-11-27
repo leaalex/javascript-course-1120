@@ -46,10 +46,12 @@ window.onload = function () {
     }
 
     function drawSizeElements() {
-        const input = creator.genID('input')
+        const width = creator.genID('width')
+        const height = creator.genID('height')
         const button = creator.genID('button')
         return creator.add('div', { className: 'input-group mb-3' },
-            creator.add('input', { className: 'form-control', type: 'text', ref: input }),
+            creator.add('input', { className: 'form-control', type: 'text', ref: width, placeholder: "Ширина" }),
+            creator.add('input', { className: 'form-control', type: 'text', ref: height, placeholder: "Высота" }),
             creator.add('div', { className: 'input-group-append' },
                 creator.add('button', {
                     className: 'btn btn-outline-secondary',
@@ -57,8 +59,9 @@ window.onload = function () {
                     ref: button,
                     events: {
                         'click': () => {
-                            let size = new Number(creator.elements[input].value)
-                            drawDesk(size)
+                            let widthNumber = new Number(creator.elements[width].value)
+                            let heightNumber = new Number(creator.elements[height].value)
+                            drawDesk(widthNumber, heightNumber)
                         }
                     }
                 }, 'Создать')
@@ -67,17 +70,17 @@ window.onload = function () {
     }
 
     window.creator = new Creater(document.getElementById('root'))
-    let genMap = (size) => [...Array(size * size).keys()].sort(() => Math.random() - 0.5)
+    let genMap = (width, height) => [...Array(width * height).keys()].sort(() => Math.random() - 0.5)
         .map((a, i) => ({
             value: a ? a : '',
             ref: creator.genID('elem'),
             index: i,
-            x: i % size,
-            y: Math.trunc(i / size)
+            x: i % width,
+            y: Math.trunc(i / width)
         }))
     let desk = creator.genID('desk')
 
-    let checkWin = (map) => map.every(a => a.index == a.value - 1 || a.value == '' && a.index == map.length - 1)
+    let checkWin = (map) => map && map.length > 0 && map.every(a => a.index == a.value - 1 || a.value == '' && a.index == map.length - 1)
 
     let swapValues = (empty, elem) => {
         if (!empty || !elem) return
@@ -89,28 +92,35 @@ window.onload = function () {
     let map
     let getEmpty = (map) => map.find(a => !a.value)
 
-    function drawDesk(size) {
-        map = genMap(size)
+    let deskWidth = 1500
+
+    function drawDesk(width, height) {
+        map = genMap(width, height)
+        let side = width < height ? width : height
         let counter = 0
         let currRow = creator.add('div', { className: 'row' })
         let rows = [currRow]
         while (true) {
             let elem = map[counter]
             elem.element = creator.add('div', {
-                className: 'col bg-secondary border text-center', style: 'height: 30px', ref: elem.ref,
+                className: 'col bg-secondary border text-center',
+                style: {
+                    height: new Number(deskWidth / side),
+                    width: new Number(deskWidth / side)
+                },
+                ref: elem.ref,
                 events: {
                     click: () => {
                         let empty = map.find(a => !a.value)
                         if (Math.abs(elem.x - empty.x) + Math.abs(elem.y - empty.y) != 1) return
                         swapValues(empty, elem)
                         if (checkWin(map)) alert('Победа!')
-                    },
+                    }
                 }
             }, elem.value)
             currRow.append(elem.element)
-
             counter++
-            if (counter % size != 0) continue
+            if (counter % width != 0) continue
             if (counter >= map.length) break
             currRow = creator.add('div', { className: 'row' })
             rows.push(currRow)
@@ -143,6 +153,5 @@ window.onload = function () {
     })
 
     creator.publish(drawSizeElements())
-
 }
     
