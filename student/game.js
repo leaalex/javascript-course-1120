@@ -1,4 +1,3 @@
-
 window.onload = function () {
     function Creater(root) {
         this.root = root
@@ -92,6 +91,7 @@ window.onload = function () {
     let map
     let getEmpty = (map) => map.find(a => !a.value)
 
+
     let deskWidth = 1500
 
     function drawDesk(width, height) {
@@ -103,12 +103,15 @@ window.onload = function () {
         while (true) {
             let elem = map[counter]
             elem.element = creator.add('div', {
+
                 className: 'col bg-secondary border text-center',
                 style: {
                     height: new Number(deskWidth / side),
                     width: new Number(deskWidth / side)
                 },
                 ref: elem.ref,
+
+
                 events: {
                     click: () => {
                         let empty = map.find(a => !a.value)
@@ -154,4 +157,3 @@ window.onload = function () {
 
     creator.publish(drawSizeElements())
 }
-    
